@@ -1,6 +1,48 @@
-﻿$dest = "$($env:ProgramData)\Microsoft\RenameComputer"
+﻿<#PSScriptInfo
+
+.VERSION 2.0
+
+.GUID 3b42d8c8-cda5-4411-a623-90d812a8e29e
+
+.AUTHOR Michael Niehaus
+.Additions: mark_burns@dell.com
+.Additons : Chris Marshall
+
+.COMPANYNAME Microsoft
+
+.COPYRIGHT
+
+.TAGS
+
+.LICENSEURI
+
+.PROJECTURI
+
+.ICONURI
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS
+
+.EXTERNALSCRIPTDEPENDENCIES
+
+.RELEASENOTES
+Version 1.0: Initial version.
+Version 1.1: Added suffix loop
+Version 1.2: long servicetag for VM testing
+Version 2.0: Refactored into functions plus additonal deatures added including 
+    get AssetNumber, 
+    dynamically limit the size of serial number or asset tag used based on prefix length to ensuyre name stays below 13 (without including the addition of 2 suffix numbers encase of duplicate names)
+     use of Rename-Computers function to determine  
+     Variables aded for Scheduled Task name
+
+.PRIVATEDATA
+
+#>
+$dest = "$($env:ProgramData)\Microsoft\RenameComputer"
 $ScheduledTaskName = "RenameComputer"
 $DevicePrefix = "PC-"
+
 Function Assert-IsDomainMember{
 $details = Get-ComputerInfo
 if ($details.CsPartOfDomain) 
@@ -133,7 +175,8 @@ Function Add-Suffix{
     }
     return $newName
 }
-
+$dest = "$($env:ProgramData)\Microsoft\RenameComputer"
+$ScheduledTaskName = "RenameComputer"
 if (-not (Test-Path $dest))
 {
     mkdir $dest
