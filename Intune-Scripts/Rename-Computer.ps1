@@ -99,21 +99,28 @@ Function Get-ComputerName{
     param(
         [string]$prefix = ""
     )
-        #Generate the Computer Name
-    $availableLength = (12 - $prefix.Length)     # max length of net bios computer name is 
-
+    $maxlength = (12 - $prefix.Length)     # max length of net bios computer name is 15 so allowing for 
     [string]$at = Get-AssetNumber
-    if ($at -ne ""){
-        [string]$computerName =  -join ($prefix , $at.substring(0,$availableLength).ToString()) 
+    if ($at -eq ""){
+            Write-Host "Using Serial number as cannot find a Asset Tag"
+            [string]$at  = Get-SerialNumber
+            if ($at -eq ""){
+                Write-Host "Failed to identifiy either a Serial Number or a Asset tag"
+                return $null
+            }
+        }
     }
+    if ($at.length -ge $maxlength){
+        $availableLength = $maxlength
+    } 
     else{
-        [string]$sn  = Get-SerialNumber
-        [string]$computerName =  -join ($prefix , $sn.substring(0,$availableLength).ToString()) 
+        $availableLength = $at.length
     }
+    Write-Host "Initial computer name will be $computerName"       
+    [string]$computerName =  -join ($prefix , $at.substring(0,$availableLength).ToString()) 
     $computerName = Add-Suffix -newName $computerName #Add a suffix if the machine name already exists
     Write-Host "Computer name will be $computerName"
     return $computerName
-
 }
 Function Get-SerialNumber{
     [string]$serialNumber = Get-WmiObject Win32_ComputerSystemProduct | Select -Expand IdentifyingNumber
