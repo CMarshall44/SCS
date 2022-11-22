@@ -10,22 +10,6 @@
 
 .COMPANYNAME Microsoft
 
-.COPYRIGHT
-
-.TAGS
-
-.LICENSEURI
-
-.PROJECTURI
-
-.ICONURI
-
-.EXTERNALMODULEDEPENDENCIES 
-
-.REQUIREDSCRIPTS
-
-.EXTERNALSCRIPTDEPENDENCIES
-
 .RELEASENOTES
 Version 1.0: Initial version.
 Version 1.1: Added suffix loop
@@ -110,14 +94,12 @@ Function Get-ComputerName{
             }
         }
     }
-    if ($at.length -ge $maxlength){
+    if ($at.length -gt $maxlength){
         $availableLength = $maxlength
+        $at = $at.substring(0,$availableLength).ToString()
     } 
-    else{
-        $availableLength = $at.length
-    }
     Write-Host "Initial computer name will be $computerName"       
-    [string]$computerName =  -join ($prefix , $at.substring(0,$availableLength).ToString()) 
+    [string]$computerName =  -join ($prefix , $at) 
     $computerName = Add-Suffix -newName $computerName #Add a suffix if the machine name already exists
     Write-Host "Computer name will be $computerName"
     return $computerName
