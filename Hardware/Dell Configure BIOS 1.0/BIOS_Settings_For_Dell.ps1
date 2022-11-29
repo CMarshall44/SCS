@@ -58,7 +58,6 @@ Function Get-DellBIOSProvider{
             Install-Module DellBIOSProvider -Force  -ErrorAction stop
             Write-Log -Message_Type "INFO" -Message "DellBIOSProvider has been installed"  			
         }
-
             Import-Module DellBIOSProvider -ErrorAction stop
             Write-Log -Message_Type "INFO" -Message "DellBIOSProvider has been imported"  
 
@@ -114,7 +113,7 @@ ForEach($New_Setting in $Get_CSV_Content){
 				Write-Log -Message_Type "SUCCESS" -Message "New value for $Attribute is $Setting_Current_Value"  						
 			}
             Catch{
-				Write-Log -Message_Type "ERROR" -Message "Can not change setting $Attribute (Return code $Change_Return_Code)"  																		
+				Write-Log -Message_Type "ERROR" -Message "Cannot change setting $Attribute (Return code $Change_Return_Code)"  																		
 			}
 		}
 		Else{
@@ -123,7 +122,7 @@ ForEach($New_Setting in $Get_CSV_Content){
 			    Write-Log -Message_Type "SUCCESS" -Message "New value for $Attribute is $Setting_Current_Value"  						
 			}
             Catch{
-				Write-Log -Message_Type "ERROR" -Message "Can not change setting $Attribute (Return code $Change_Return_Code)"  																		
+				Write-Log -Message_Type "ERROR" -Message "Cannot change setting $Attribute (Return code $Change_Return_Code)"  																		
             }						
 		}        
 	}  

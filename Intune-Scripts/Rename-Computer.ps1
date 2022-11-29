@@ -86,12 +86,11 @@ Function Get-ComputerName{
     $maxlength = (12 - $prefix.Length)     # max length of net bios computer name is 15 so allowing for 
     [string]$at = Get-AssetNumber
     if ($at -eq ""){
-            Write-Host "Using Serial number as cannot find a Asset Tag"
-            [string]$at  = Get-SerialNumber
-            if ($at -eq ""){
-                Write-Host "Failed to identifiy either a Serial Number or a Asset tag"
-                return $null
-            }
+        Write-Host "Using Serial number as cannot find a Asset Tag"
+        [string]$at  = Get-SerialNumber
+        if ($at -eq ""){
+            Write-Host "Failed to identifiy either a Serial Number or a Asset tag"
+            return $null
         }
     }
     if ($at.length -gt $maxlength){
