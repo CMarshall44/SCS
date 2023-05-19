@@ -1,0 +1,1 @@
+Set-RegistryProperty -keyPath "HKLM:\Software\Policies\Microsoft\Internet Explorer\Main" -propertyType DWord -propertyName NotifyDisableIEOptions  -propertyValue 0
